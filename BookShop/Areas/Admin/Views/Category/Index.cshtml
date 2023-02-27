@@ -5,10 +5,10 @@
     IEnumerable<Category> categories = (IEnumerable<Category>)ViewData["categories"];
     int tableRowCount = 1;
 
-    string action = "/Category/Create";
+    string action = "/Admin/Category/Create";
     if (ViewData["action"] == "edit")
     {
-        action = "/Category/Edit";
+        action = "/Admin/Category/Edit";
     }
 }
 
