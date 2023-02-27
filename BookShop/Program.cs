@@ -11,7 +11,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
-builder.Services.AddScoped<BookShop.Repositories.IRepository.ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<BookShop.Repositories.IRepository.IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
