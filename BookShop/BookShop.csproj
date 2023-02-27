@@ -14,10 +14,14 @@
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="Microsoft.EntityFrameworkCore" />
     <None Remove="Views\Category\" />
+    <None Remove="Repositories\" />
+    <None Remove="Repositories\IRepository\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Views\Category\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Repositories\IRepository\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.3">

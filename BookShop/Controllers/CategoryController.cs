@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookShop.Data;
+using BookShop.Repositories.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,9 +12,9 @@ namespace BookShop.Controllers
 {
     public class CategoryController : Controller
     {
-        public readonly ApplicationDbContext _db;
+        public readonly ICategoryRepository _db;
 
-        public CategoryController(ApplicationDbContext db)
+        public CategoryController(ICategoryRepository db)
         {
             _db = db;
         }
@@ -22,7 +23,7 @@ namespace BookShop.Controllers
         public IActionResult Index()
         {
 
-            IEnumerable<Models.Category> objCategoryList = _db.Categories;
+            IEnumerable<Models.Category> objCategoryList = _db.GetAll();
 
             ViewData["categories"] = objCategoryList;
 
@@ -35,14 +36,14 @@ namespace BookShop.Controllers
         {
             if(ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
-                _db.SaveChanges();
+                _db.Add(obj);
+                _db.Save();
 
                 TempData["message"] = "Create Category Success";
                 return RedirectToAction("Index");
             }
 
-            IEnumerable<Models.Category> objCategoryList = _db.Categories;
+            IEnumerable<Models.Category> objCategoryList = _db.GetAll();
 
             ViewData["categories"] = objCategoryList;
             
@@ -58,14 +59,14 @@ namespace BookShop.Controllers
                 return NotFound();
             }
 
-            var category = _db.Categories.Find(id);
+            var category = _db.GetFirstOrDefault(cat => cat.Id == id);
 
             if(category == null)
             {
                 return NotFound();
             }
 
-            IEnumerable<Models.Category> objCategoryList = _db.Categories;
+            IEnumerable<Models.Category> objCategoryList = _db.GetAll();
 
             ViewData["categories"] = objCategoryList;
             ViewData["action"] = "edit";
@@ -80,13 +81,13 @@ namespace BookShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _db.Update(obj);
+                _db.Save();
                 TempData["message"] = "Edit Category Success";
                 return RedirectToAction("Index");
             }
 
-            IEnumerable<Models.Category> objCategoryList = _db.Categories;
+            IEnumerable<Models.Category> objCategoryList = _db.GetAll();
 
             ViewData["categories"] = objCategoryList;
 
@@ -101,12 +102,12 @@ namespace BookShop.Controllers
                 return NotFound();
             }
 
-            var category = _db.Categories.Find(id);
+            var category = _db.GetFirstOrDefault(cat => cat.Id == id);
 
             if (category != null)
             {
-                _db.Categories.Remove(category);
-                _db.SaveChanges();
+                _db.Remove(category);
+                _db.Save();
                 TempData["message"] = "Delete Category Success";
             }
 
