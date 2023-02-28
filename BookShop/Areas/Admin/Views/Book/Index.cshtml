@@ -1,0 +1,50 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    int tableRowCount = 0;
+}
+
+@model IEnumerable<Book>
+
+@section Notification{
+    @{
+        <partial name="_Notification" />
+    }
+}
+
+@section Navbar{
+    @{
+        <partial name="_Navbar" />
+    }
+}
+
+<h2>Book</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-striped table-sm" id="dataTable" style="width: 100%">
+                <thead>
+                    <tr>
+                        @*<th scope="col">#</th>*@
+                        <th scope="col">Title</th>
+                        <th scope="col">ISBN</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                
+            </table>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <script src="~/js/book.js"></script>
+    }
+}

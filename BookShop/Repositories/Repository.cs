@@ -14,6 +14,7 @@ namespace BookShop.Repositories
 		public Repository(ApplicationDbContext db)
 		{
             _db = db;
+            //_db.Books.Include(t => t.Category)
             this.dbSet = _db.Set<T>();
 		}
 
@@ -21,14 +22,22 @@ namespace BookShop.Repositories
         {
             dbSet.Add(Entity);
         }
-
-        IEnumerable<T> IRepository<T>.GetAll()
+        //includeProp - "Category,Order" to get _db.Books.Include(t => t.Category);
+        IEnumerable<T> IRepository<T>.GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+
+            if(includeProperties != null)
+            {
+                foreach(var includeProp in includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
             return query.ToList();
         }
 
-        T IRepository<T>.GetFirstOrDefault(Expression<Func<T, bool>> filter)
+        T IRepository<T>.GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);

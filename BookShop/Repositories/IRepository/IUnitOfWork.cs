@@ -5,6 +5,7 @@ namespace BookShop.Repositories.IRepository
 	{
 		ICategoryRepository Category { get; }
 		ICoverTypeRepository CoverType { get; }
+		IBookRepository Book { get; }
 
 		void Save();
 	}
