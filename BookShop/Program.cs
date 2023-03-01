@@ -1,6 +1,8 @@
-﻿using BookShop.Data;
+using BookShop.Data;
 using BookShop.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+//using BookShop.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +12,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
+//options => options.SignIn.RequireConfirmedAccount = true
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<BookShop.Repositories.IRepository.IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 
@@ -28,8 +34,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
 
 app.UseAuthorization();
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
