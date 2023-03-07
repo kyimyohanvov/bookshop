@@ -23,6 +23,16 @@ public class HomeController : Controller
         return View(bookList);
     }
 
+    public IActionResult Details(int id)
+    {
+        ShoppingCart cart = new()
+        {
+            Count = 1,
+            Book = _db.Book.GetFirstOrDefault(b => b.Id == id, includeProperties: "Category")
+        };
+                return View(cart);
+    }
+
     public IActionResult Privacy()
     {
         return View();
