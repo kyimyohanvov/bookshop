@@ -37,7 +37,7 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
-app.MapRazorPages();
+app.MapRazorPages();//to work identity for login, register razor pages
 
 app.MapControllerRoute(
     name: "default",

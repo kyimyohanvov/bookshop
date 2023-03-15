@@ -16,6 +16,8 @@ namespace BookShop.Data
 		public DbSet<CoverType> CoverTypes { get; set; }
 
         public DbSet<Book> Books { get; set; }
+
+		public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }
 
